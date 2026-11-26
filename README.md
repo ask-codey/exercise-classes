@@ -2,7 +2,7 @@
 
 Exercise code for the lesson **Exercise: Classes** in the C# Full-Stack Bootcamp on [ask-codey.com](https://www.ask-codey.com).
 
-In this exercise you write six classes from scratch, in the `ClassesExercise` project. The tests in `ClassesExercise.Tests` check that each class has the right properties, constructors and methods, and that they behave correctly.
+In this exercise you write six classes from scratch, in the `ClassesExercise` project, then give `Rectangle` two more methods. The tests in `ClassesExercise.Tests` check that each class has the right properties, constructors and methods, and that they behave correctly.
 
 ## Getting started
 
@@ -100,6 +100,13 @@ Methods:
 One constructor, with `string planeNumber, int totalFirstClassSeats, int totalCoachSeats`.
 
 `bool ReserveSeats(bool forFirstClass, int totalNumberOfSeats)` books that many seats in first class or coach, and returns `true`. If there aren't enough seats left, it books nothing and returns `false`.
+
+## 7. Rectangle: a copy or the same one
+
+Back to your `Rectangle`, for *Stack, Heap and Garbage Collection*. Add two methods:
+
+- `Rectangle Scaled(int factor)` gives back a **new** `Rectangle`, `factor` times as wide and as high, and leaves this rectangle as it was. A 3 x 4 rectangle's `Scaled(2)` is a 6 x 8 rectangle, and the 3 x 4 one is still 3 x 4.
+- `void Grow(int extra)` changes **this** rectangle: it adds `extra` to its width and to its height. A 3 x 4 rectangle's `Grow(2)` makes it 5 x 6, and every variable that refers to it sees 5 x 6.
 
 ## Hand it in
 

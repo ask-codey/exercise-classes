@@ -282,3 +282,42 @@ public class AirplaneTests
         Assert.AreEqual(10, Check.Get<int>(plane, "BookedFirstClassSeats"), "A reservation that doesn't fit books nothing.");
     }
 }
+
+[TestClass]
+public class RectangleCopyTests
+{
+    // Step 7: a copy or the same one (Stack, Heap and Garbage Collection).
+
+    [TestMethod]
+    public void Rectangle_HasScaledAndGrow()
+    {
+        Check.Returns("Rectangle", "Scaled", Check.Class("Rectangle"), typeof(int));
+        Check.Returns("Rectangle", "Grow", typeof(void), typeof(int));
+    }
+
+    [TestMethod]
+    [DataRow(3, 4, 2, 6, 8)]
+    [DataRow(5, 1, 3, 15, 3)]
+    public void Scaled_ReturnsANewRectangle_AndLeavesThisOneAsItWas(int width, int height, int factor, int newWidth, int newHeight)
+    {
+        object rectangle = Check.New("Rectangle", width, height);
+        object scaled = Check.Call(rectangle, "Scaled", factor)!;
+
+        Assert.IsFalse(ReferenceEquals(rectangle, scaled), "Scaled gives back a new Rectangle, made with new, not this one.");
+        Assert.AreEqual(newWidth, Check.Get<int>(scaled, "Width"), $"A {width} x {height} rectangle scaled by {factor} is {newWidth} wide.");
+        Assert.AreEqual(newHeight, Check.Get<int>(scaled, "Height"), $"A {width} x {height} rectangle scaled by {factor} is {newHeight} high.");
+        Assert.AreEqual(width, Check.Get<int>(rectangle, "Width"), $"Scaled leaves the original {width} x {height} rectangle as it was.");
+        Assert.AreEqual(height, Check.Get<int>(rectangle, "Height"), $"Scaled leaves the original {width} x {height} rectangle as it was.");
+    }
+
+    [TestMethod]
+    public void Grow_ChangesThisRectangle_SoEveryReferenceSeesIt()
+    {
+        object rectangle = Check.New("Rectangle", 3, 4);
+        object sameOne = rectangle;
+        Check.Call(rectangle, "Grow", 2);
+
+        Assert.AreEqual(5, Check.Get<int>(sameOne, "Width"), "A 3 x 4 rectangle grown by 2 is 5 wide, seen through any reference to it.");
+        Assert.AreEqual(6, Check.Get<int>(sameOne, "Height"), "A 3 x 4 rectangle grown by 2 is 6 high, seen through any reference to it.");
+    }
+}
